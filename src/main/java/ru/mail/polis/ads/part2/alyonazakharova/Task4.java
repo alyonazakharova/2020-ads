@@ -30,7 +30,7 @@ public class Task4 {
         int i = left;
         int j = right;
         while (i <= j) {
-            while (array[i].compareTo(x) > 0 ) {
+            while (array[i].compareTo(x) > 0) {
                 i++;
             }
             while (array[j].compareTo(x) < 0) {
