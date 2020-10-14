@@ -1,7 +1,5 @@
 package ru.mail.polis.ads.part3.alyonazakharova;
 
-//https://www.e-olymp.com/ru/problems/4074
-
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -12,11 +10,13 @@ import java.util.StringTokenizer;
 import java.util.ArrayList;
 import java.util.Collections;
 
+//https://www.e-olymp.com/ru/problems/4074
+
 public class Task3 {
 
     private static class MaxHeap {
 
-        private ArrayList<Integer> heap;
+        private final ArrayList<Integer> heap;
         private int size;
 
         private MaxHeap() {
@@ -37,8 +37,8 @@ public class Task3 {
 
         private int extract() {
             int res = heap.get(1);
-            heap.set(1, heap.get(size - 1));
-            heap.remove(size - 1);
+            heap.set(1, heap.get(size));
+            heap.remove(size);
             size--;
             sink(1);
             return res;

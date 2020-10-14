@@ -15,7 +15,7 @@ public class Task2 {
 
     private static class Heap {
 
-        private ArrayList<Integer> heap;
+        private final ArrayList<Integer> heap;
         private int size;
 
         private Heap() {
@@ -32,8 +32,8 @@ public class Task2 {
 
         private int extract() {
             int res = heap.get(1);
-            heap.set(1, heap.get(size - 1));
-            heap.remove(size - 1);
+            heap.set(1, heap.get(size));
+            heap.remove(size);
             size--;
             sink(1);
             return res;
