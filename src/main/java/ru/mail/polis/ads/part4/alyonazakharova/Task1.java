@@ -24,10 +24,6 @@ public class Task1 {
         }
     }
 
-    private static boolean isOpening(char bracket) {
-        return bracket == '(' || bracket == '[';
-    }
-
     private static void solve(final FastScanner in, final PrintWriter out) {
 
         String input;
@@ -51,10 +47,10 @@ public class Task1 {
 
         for (int i = 0; i < n; i++) {
             array[i][i] = 1;
-            if (isOpening(chars[i])) {
-                brackets[i][i] = "" + chars[i] + requiredBracket(chars[i]);
+            if (chars[i] == '(' || chars[i] == ')') {
+                brackets[i][i] = "()";
             } else {
-                brackets[i][i] = "" + requiredBracket(chars[i]) + chars[i];
+                brackets[i][i] = "[]";
             }
         }
 
