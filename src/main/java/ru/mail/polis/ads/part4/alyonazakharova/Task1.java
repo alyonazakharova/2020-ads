@@ -30,10 +30,11 @@ public class Task1 {
 
     private static void solve(final FastScanner in, final PrintWriter out) {
 
-        String input = in.next();
+        String input;
 
-        if (input.isEmpty()) {
-            out.println(input);
+        try {
+            input = in.next();
+        } catch (NullPointerException e) {
             return;
         }
 
@@ -63,8 +64,25 @@ public class Task1 {
                 if ((chars[i] == '(' && chars[j] == ')')
                         || (chars[i] == '[' && chars[j] == ']')) {
 
-                    array[i][j] = array[i + 1][j - 1];
-                    brackets[i][j] = "" + chars[i] + brackets[i + 1][j - 1] + chars[j];
+                    int min = j - i + 1;
+                    int bestPartition = 0;
+                    int t = 0;
+                    while (t < j && i + t + 1 <= j) {
+                        if (i + t + 1 < n) {
+                            if (array[i][i + t] + array[i + t + 1][j] <= min) {
+                                min = array[i][i + t] + array[i + t + 1][j];
+                                bestPartition = t;
+                            }
+                        }
+                        t++;
+                    }
+                    if (min < array[i + 1][j - 1]) {
+                        array[i][j] = min;
+                        brackets[i][j] = brackets[i][i + bestPartition] + brackets[i + bestPartition + 1][j];
+                    } else {
+                        array[i][j] = array[i + 1][j - 1];
+                        brackets[i][j] = "" + chars[i] + brackets[i + 1][j - 1] + chars[j];
+                    }
 
                 } else {
                     int min = j - i + 1;
