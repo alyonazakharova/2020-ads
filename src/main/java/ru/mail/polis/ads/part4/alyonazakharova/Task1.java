@@ -5,8 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
-import java.util.ArrayDeque;
-import java.util.Deque;
 import java.util.StringTokenizer;
 
 //https://www.e-olymp.com/ru/problems/1087
@@ -30,11 +28,15 @@ public class Task1 {
         return bracket == '(' || bracket == '[';
     }
 
-    private static int bestPartition;
-
     private static void solve(final FastScanner in, final PrintWriter out) {
 
         String input = in.next();
+
+        if (input.isEmpty()) {
+            out.println(input);
+            return;
+        }
+
         char[] chars = input.toCharArray();
         int n = input.length();
         int[][] array = new int[n][n];
@@ -42,13 +44,17 @@ public class Task1 {
 
         for (int i = 0; i < n; i++) {
             for (int j = 0; j <n; j++) {
-                brackets[i][j] = "+";
+                brackets[i][j] = "";
             }
         }
 
         for (int i = 0; i < n; i++) {
             array[i][i] = 1;
-            brackets[i][i] = String.valueOf(requiredBracket(chars[i]));
+            if (isOpening(chars[i])) {
+                brackets[i][i] = "" + chars[i] + requiredBracket(chars[i]);
+            } else {
+                brackets[i][i] = "" + requiredBracket(chars[i]) + chars[i];
+            }
         }
 
         for (int k = 1; k < n; k++) {
@@ -58,11 +64,11 @@ public class Task1 {
                         || (chars[i] == '[' && chars[j] == ']')) {
 
                     array[i][j] = array[i + 1][j - 1];
-                    brackets[i][j] = brackets[i + 1][j - 1];
+                    brackets[i][j] = "" + chars[i] + brackets[i + 1][j - 1] + chars[j];
 
                 } else {
                     int min = j - i + 1;
-                    bestPartition = 0;
+                    int bestPartition = 0;
                     int t = 0;
                     while (t < j && i + t + 1 <= j) {
                         if (i + t + 1 < n) {
@@ -79,39 +85,8 @@ public class Task1 {
                 j++;
             }
         }
-        System.out.println(bestPartition);
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j <n; j++) {
-                System.out.print(array[i][j]);
-            }
-            System.out.println();
-        }
-        for (int i = 0; i < n; i++) {
-            for (int j = 0; j <n; j++) {
-                System.out.print(brackets[i][j] + " ");
-            }
-            System.out.println();
-        }
 
-        StringBuilder sb = new StringBuilder(input);
-        int i = 0;
-        int j = n - 1;
-        while (requiredBracket(sb.charAt(i)) == sb.charAt(j) && i < bestPartition) {
-            i++;
-            j--;
-        }
-
-        System.out.println(i);
-        System.out.println(j);
-        Deque<Character> deque = new ArrayDeque<>();
-        for (int k = 0; k < array[0][n - 1]; k++) {
-            deque.push(brackets[0][n - 1].charAt(k));
-        }
-        while (!deque.isEmpty()) {
-            System.out.println(deque.pollLast());
-        }
-
-
+        out.println(brackets[0][n - 1]);
     }
 
     private static class FastScanner {
