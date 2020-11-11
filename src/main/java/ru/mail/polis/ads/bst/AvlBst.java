@@ -50,9 +50,10 @@ public class AvlBst<Key extends Comparable<Key>, Value>
         if (x == null) {
             return new Node(key, value, 1);
         }
-        if (key.compareTo(x.key) < 0) {
+        int comparison = key.compareTo(x.key);
+        if (comparison < 0) {
             x.left = put(x.left, key, value);
-        } else if (key.compareTo(x.key) > 0) {
+        } else if (comparison > 0) {
             x.right = put(x.right, key, value);
         } else {
             x.value = value;
@@ -118,13 +119,12 @@ public class AvlBst<Key extends Comparable<Key>, Value>
         if (x == null) {
             return null;
         }
-        if (key.compareTo(x.key) < 0) {
+        int comparison = key.compareTo(x.key);
+        if (comparison < 0) {
             x.left = remove(x.left, key);
-        }
-        if (key.compareTo(x.key) > 0) {
+        } else if (comparison > 0) {
             x.right = remove(x.right, key);
-        }
-        if (key.compareTo(x.key) == 0) {
+        } else {
             x = innerRemove(x);
         }
         return x;
@@ -224,10 +224,11 @@ public class AvlBst<Key extends Comparable<Key>, Value>
         if (x == null) {
             return null;
         }
-        if (x.key.compareTo(key) == 0) {
+        int comparison = x.key.compareTo(key);
+        if (comparison == 0) {
             return x;
         }
-        if (x.key.compareTo(key) < 0) {
+        if (comparison < 0) {
             return ceil(x.right, key);
         }
 
