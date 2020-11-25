@@ -40,13 +40,11 @@ class HashTableBaseTest {
     }
     
     HashTable<String, String> newTable() {
-        // Use implementation
-        return null;
+        return new MyHashTable<>(16, 0.75);
     }
     
     HashTable<Key, String> newStrangeKeyTable() {
-        // Use implementation
-        return null;
+        return new MyHashTable<>(16, 0.75);
     }
 
     @Test
